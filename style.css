@@ -1,0 +1,253 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Sarabun", sans-serif;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== Desktop background ===== */
+@media (min-width: 600px) {
+  body {
+    background: #f5f7f8;
+    padding: 20px 0;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 20px 18px 120px;
+}
+
+/* card ลอยเฉพาะ desktop */
+@media (min-width: 600px) {
+  .card {
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+}
+
+h1 {
+  text-align: center;
+  color: #6c8ea0;
+}
+
+.subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 18px;
+  border: none;
+  font-size: 16px;
+}
+
+.btn-sub {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px dashed #bbb;
+  background: #f0f4f7;
+  color: #6c8ea0;
+  font-size: 14px;
+}
+
+
+/* ===== Canvas ===== */
+canvas {
+  display: none;
+  width: 100%;
+  margin-top: 14px;
+  border-radius: 12px;
+  border: 1px dashed #ccc;
+  touch-action: none;
+}
+
+
+/* ===== Toolbox (แบบเก่า) ===== */
+.canvas-tools {
+  margin-top: 10px;
+  background: #f7f9fa;
+  padding: 12px;
+  border-radius: 14px;
+  display: none;
+}
+
+.tool-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0px;
+}
+
+.tool-label {
+  font-size: 13px;
+  min-width: 32px;
+}
+
+.color-presets {
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.dot.active {
+  outline: 3px solid #6ca06c;
+}
+.dot.custom-color {
+  background: conic-gradient(
+    red,
+    yellow,
+    lime,
+    cyan,
+    blue,
+    magenta,
+    red
+  );
+}
+input[type="color"] {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: conic-gradient(
+    red,
+    yellow,
+    lime,
+    cyan,
+    blue,
+    magenta,
+    red
+  );
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.pen-size {
+  font-size: 13px;
+  min-width: 36px;
+  text-align: right;
+}
+
+.btn-clear {
+  width: 100%;
+  margin-left: auto;
+  border-radius: 16px;
+  padding: 6px 10px;
+  border: none;
+  background: #eee;
+}
+.btn-clearr {
+  width: 100%;
+  border: none;
+  background: #ffecec;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+
+/* ===== Upload ===== */
+.upload-area {
+  display: none;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.qr-img {
+  width: 60%;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+.support-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  margin-top: 16px;
+  border: 1px dashed #bbb;
+  background: #f7f7f7;
+  color: black;
+  font-size: 13px;
+}
+
+.dashed {
+  border: 1px dashed #6c8ea0;
+  background: transparent;
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+#previewContainer {
+  display: none;
+  position: relative;
+}
+
+#previewContainer img {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.remove {
+  margin-top: 6px;
+  border: none;
+  background: #ffebee;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+/* ===== Fixed Submit ===== */
+.submit-fixed {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(420px, 100%);
+  padding: 16px;
+  border: none;
+  font-size: 18px;
+  background: #6c8ea0;
+  color: white;
+}
+
+.submit-fixed:disabled {
+  background: #cfd8dc;
+}
