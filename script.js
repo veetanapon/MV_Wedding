@@ -162,4 +162,42 @@ function submitForm() {
 
   console.log("SEND", payload);
   // fetch ไป GAS ตามของคุณได้เลย
+  if (!payload.sendingMessage && !payload.image && !payload.uploadImage) {
+        alert("กรุณาพิมพ์ข้อความ วาดรูป หรืออัปโหลดรูปก่อนส่งครับ");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "กำลังส่ง...";
+
+      fetch("https://script.google.com/macros/s/AKfycbw1EGsx0VNAIJGsR_uqQzJbsVWGnvrZjL1OS0F9NmsbpWFvmGlmmMfGplJZmnYfYCpI/exec", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        }
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          alert("💙 ขอบคุณที่อวยพรเราสองคนค่ะ/ครับ 💙");
+          document.getElementById("wishForm").reset();
+          clearCanvas();
+          canvas.style.display = "none";
+          document.getElementById('show-Canvas').style.display = "block";
+          document.getElementById('clear-Canvas').style.display = "none";
+          document.getElementById('upload-area').style.display = 'none';
+          document.getElementById('showUploadArea').style.display = 'block';
+          btn.disabled = false;
+          btn.innerText = "ส่งคำอวยพร 💙";
+          location.reload();
+        } else {
+          throw new Error(res.error);
+        }
+      })
+      .catch(err => {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+        btn.disabled = false;
+        btn.innerText = "ส่งคำอวยพร 💙";
+      });
 }
