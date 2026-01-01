@@ -131,6 +131,8 @@ canvas {
   outline: 3px solid #6ca06c;
 }
 .dot.custom-color {
+  position: relative;
+  overflow: hidden;
   background: conic-gradient(
     red,
     yellow,
@@ -140,6 +142,15 @@ canvas {
     magenta,
     red
   );
+}
+#customColorInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;          /* ซ่อน แต่ยัง clickable */
+  cursor: pointer;
+  border: none;
 }
 
 .pen-size {

@@ -14,7 +14,7 @@
       <h1>💌 ส่งคำอวยพรให้มิ้นและวี</h1>
       <p class="subtitle">ร่วมแสดงความยินดีแก่บ่าวสาว</p>
 
-      <form onsubmit="return false;">
+      <form id="wishForm" onsubmit="return false;">
         <input type="text" id="sendingName" placeholder="ชื่อของคุณ" />
 
         <textarea
@@ -42,9 +42,12 @@
               <div class="dot" data-color="#2A9D8F" style="background:#2A9D8F"></div>
               <div class="dot" data-color="#343A40" style="background:#343A40"></div>
 
-              <!-- custom color -->
+              <div class="dot custom-color" id="customColorBtn" title="เลือกสีเอง">
+                <input type="color" id="customColorInput" />
+            </div>
+              <!-- custom color
               <div class="dot custom-color" id="customColorBtn" title="เลือกสีเอง"></div>
-              <input type="color" id="customColorInput" hidden />
+              <input type="color" id="customColorInput" hidden /> -->
             </div>
 
             <button type="button" class="btn-clear" onclick="setEraser()">🧽</button>

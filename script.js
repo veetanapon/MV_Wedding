@@ -185,10 +185,10 @@ function submitForm() {
           document.getElementById("wishForm").reset();
           clearCanvas();
           canvas.style.display = "none";
-          document.getElementById('show-Canvas').style.display = "block";
+          /*document.getElementById('show-Canvas').style.display = "block";
           document.getElementById('clear-Canvas').style.display = "none";
           document.getElementById('upload-area').style.display = 'none';
-          document.getElementById('showUploadArea').style.display = 'block';
+          document.getElementById('showUploadArea').style.display = 'block';*/
           btn.disabled = false;
           btn.innerText = "ส่งคำอวยพร 💙";
           location.reload();
@@ -202,4 +202,3 @@ function submitForm() {
         btn.innerText = "ส่งคำอวยพร 💙";
       });
 }
-
