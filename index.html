@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>ส่งคำอวยพร</title>
+  <style>
+    /* 1. Global Reset & Body */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Sarabun", sans-serif;
+      background: #ffffff; /* เปลี่ยนเป็นสีขาวเพื่อให้เนียนไปกับ card ในมือถือ */
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 2. Container - กำจัดขอบข้างในมือถือ */
+    .container {
+      width: 100%;
+      max-width: 600px; 
+      margin: 0;
+      padding: 0; /* ลบ padding ออกเพื่อให้ Card ชิดขอบจอ */
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 3. Card - ขยายเต็มหน้าจอ Edge-to-Edge */
+    .card {
+      background: #ffffff;
+      width: 100%;
+      min-height: 100dvh; /* ใช้ dvh แก้ปัญหา Safari */
+      padding: 20px 18px; /* ลดข้าง แต่ยังอ่านง่าย */
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    
+    /* 4. Typography */
+    h1 { 
+      text-align: center; 
+      color: #6C8EA0; 
+      font-size: 30px;
+      line-height: 1.3;
+      margin: 10px 0; 
+    }
+    p.subtitle { 
+      text-align: center; 
+      color: #555; 
+      font-size: 17px; 
+      margin-bottom: 25px; 
+    }
+    label { display: block; margin-top: 15px; font-weight: bold; font-size: 14px; color: #444; }
+
+    /* 5. Form Elements (Input & Textarea) */
+    input[type="text"], textarea {
+      width: 100%;
+      margin-top: 8px;
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid #eee;
+      font-size: 17px;
+      box-sizing: border-box;
+      background: #f9f9f9;
+      -webkit-appearance: none;
+    }
+    textarea { min-height: 120px; resize: none; overflow: hidden; }
+
+    /* 6. Photo & Upload Area */
+    #upload-area { display: none; margin-top: 20px; border-top: 1px dashed #eee; padding-top: 20px; }
+    .photo-drive { 
+      width: 100%; 
+      max-width: 100%; 
+      height: auto; 
+      border-radius: 12px; 
+      margin-bottom: 15px; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    #preview-container { margin-top: 10px; display: none; position: relative; }
+    #preview-container img { width: 100%; border-radius: 12px; border: 2px solid #6C8EA0; }
+
+    /* 7. Canvas & Drawing Tools */
+    #canvas { 
+      border: 1px solid #eee;
+      background: #fff;
+      border-radius: 12px;
+      display: none; 
+      width: 100%;   
+      touch-action: none;
+      box-sizing: border-box;
+      margin-top: 15px;
+    }
+    .canvas-tools {
+      display: none;
+      background: #f4f7f9;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+    .tool-row { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+    .tool-row label { font-size: 14px; font-weight: bold; min-width: 40px; margin-top: 0; }
+    
+    /* Slider เต็มหน้ากว้าง */
+    input[type="range"] { 
+      flex-grow: 1; 
+      height: 10px;
+      cursor: pointer;
+      accent-color: #6C8EA0;
+    }
+    .color-presets { display: flex; gap: 12px; }
+    .dot { 
+      width: 40px; 
+      height: 40px; 
+      border-radius: 50%; 
+      cursor: pointer; 
+      border: 2px solid #fff; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+    }
+    .dot.active { 
+      border-color: #333; 
+      transform: scale(1.1); 
+    }
+
+    /* 8. Buttons - Touch Friendly */
+    .btn {
+      margin-top: 12px;
+      width: 100%;
+      padding: 20px; 
+      font-size: 19px;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active { 
+      transform: scale(0.98); 
+    }
+    .btn-main { 
+      background: #6C8EA0; 
+      color: white; 
+      box-shadow: 0 4px 12px rgba(108, 142, 160, 0.2); 
+    }
+    .btn-sub { 
+      background: #f0f4f7; 
+      color: #6C8EA0; 
+      font-size: 17px; 
+    }
+    .btn-clear { 
+      background: #fff1f0; 
+      color: #d9534f; 
+      font-size: 14px; 
+      width: auto; 
+      padding: 10px 20px; 
+      border-radius: 10px; 
+    }
+    
+    /* 9. Desktop Adjustments (สำหรับหน้าจอคอมพิวเตอร์) */
+    @media (min-width: 601px) {
+      body { background: #f5f7f8; padding: 20px; }
+      .container { padding: 0; }
+      .card { 
+        border-radius: 24px; 
+        min-height: auto; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        padding: 40px;
+        flex-grow: 0;
+      }
+    }
+
+    /* Media Query สำหรับมือถือจอเล็กมาก */
+    @media (max-width: 380px) {
+      h1 { font-size: 22px; }
+      .btn { padding: 16px; font-size: 16px; }
+    }
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>💌 ส่งคำอวยพรให้มิ้นและวี</h1>
+      <p class="subtitle">ร่วมแสดงความยินดีแก่บ่าวสาว</p>
+
+      <form id="wishForm" onsubmit="return false;">
+        <input type="text" id="sendingName" placeholder="ชื่อของคุณ">
+        
+        <label style="display:block; margin-top:15px; font-weight: bold; font-size: 14px;">คำอวยพร</label>
+        <textarea id="sendingMessage" oninput="autoExpand(this)" placeholder="พิมพ์ข้อความที่นี่..."></textarea>
+
+        <button type="button" class="btn btn-sub" onclick="showCanvas()" id="show-Canvas">✍️ เขียนหรือวาดรูปอวยพร</button>
+        
+        <div id="canvas-tools" class="canvas-tools">
+          <div class="tool-row">
+            <label>สี:</label>
+            <div class="color-presets">
+              <div class="dot active" style="background:#2c3e50" onclick="setPenColor('#2c3e50', this)"></div>
+              <div class="dot" style="background:#e74c3c" onclick="setPenColor('#e74c3c', this)"></div>
+              <div class="dot" style="background:#27ae60" onclick="setPenColor('#27ae60', this)"></div>
+              <input type="color" id="customColor" style="width:30px; height:30px; border:none; padding:0; background:none;" onchange="setPenColor(this.value)">
+            </div>
+            <button type="button" class="btn-clear" style="margin-left:auto" onclick="setEraser()">🧽 ยางลบ</button>
+          </div>
+          <div class="tool-row">
+            <label>เส้น:</label>
+            <input type="range" id="penSize" min="1" max="40" value="3">
+          </div>
+          <button type="button" class="btn-clear" style="width:100%; margin-top: 5px;" onclick="clearCanvas()">ล้างกระดานวาด</button>
+        </div>
+
+        <canvas id="canvas"></canvas>
+        
+        <button type="button" class="btn btn-sub" id="showUploadArea" onclick="toggleUploadArea()">📸 ซัพพอร์ตเราสองคน</button>
+        <div id="upload-area">
+          <img src="https://lh3.googleusercontent.com/u/0/d/19XRp5l9hpjHbnaW7oc0zvUw44ODZqgI_" style="width: 60%; height: 60%;display: block; margin:auto;" class="photo-drive">
+          <button type="button" class="btn btn-sub" style="border: 2px dashed #6C8EA0; background: none;" onclick="document.getElementById('fileInput').click()">แตะเพื่อเลือกรูปภาพ</button>
+          <input type="file" id="fileInput" accept="image/*" onchange="previewImage(this)">
+          <div id="preview-container">
+            <img id="filePreview" src="">
+            <button type="button" class="btn-clear" style="position:absolute; top:10px; right:10px; border: 1px solid #d9534f;" onclick="removeUpload()">ลบรูป</button>
+          </div>
+        </div>
+        
+        <button type="button" class="btn btn-main" onclick="submitForm()" id="submitBtn">ส่งคำอวยพร 💙</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // --- JavaScript คงเดิมจากโค้ดล่าสุดของคุณ เพื่อรักษาฟังก์ชันทุกอย่างไว้ครบถ้วน ---
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let hasDrawn = false;
+    let uploadBase64 = null;
+    let currentMode = 'pen';
+    let lastColor = '#2c3e50';
+
+    function autoExpand(element) {
+      element.style.height = "auto";
+      element.style.height = element.scrollHeight + "px";
+    }
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = window.innerHeight * 0.45;
+    }
+
+    function toggleUploadArea() {
+      document.getElementById('upload-area').style.display = 'block';
+      document.getElementById('showUploadArea').style.display = 'none';
+    }
+
+    function showCanvas() {
+      canvas.style.display = "block";
+      document.getElementById('canvas-tools').style.display = "block";
+      document.getElementById('show-Canvas').style.display = "none";
+      resizeCanvas(); 
+    }
+
+    function previewImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          uploadBase64 = e.target.result;
+          document.getElementById('filePreview').src = e.target.result;
+          document.getElementById('preview-container').style.display = 'block';
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function removeUpload() {
+      uploadBase64 = null;
+      document.getElementById('fileInput').value = '';
+      document.getElementById('preview-container').style.display = 'none';
+    }
+
+    function setPenColor(color, el) {
+      currentMode = 'pen';
+      lastColor = color;
+      if(el) {
+        document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+        el.classList.add('active');
+      }
+    }
+
+    function setEraser() {
+      currentMode = 'eraser';
+      document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hasDrawn = false;
+    }
+
+    function getMousePos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    function startDrawing(e) {
+      drawing = true;
+      hasDrawn = true;
+      const pos = getMousePos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+      if(e.type.startsWith('touch')) e.preventDefault();
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      const pos = getMousePos(e);
+      ctx.lineWidth = document.getElementById('penSize').value;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = (currentMode === 'eraser') ? '#ffffff' : lastColor;
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      if(e.type.startsWith('touch')) e.preventDefault();
+    }
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('touchstart', startDrawing, {passive: false});
+    canvas.addEventListener('touchmove', draw, {passive: false});
+    canvas.addEventListener('touchend', () => drawing = false);
+
+    function submitForm() {
+      const btn = document.getElementById('submitBtn');
+      const payload = {
+        sendingName : document.getElementById("sendingName").value || "ไม่ประสงค์ออกนาม",
+        sendingMessage : document.getElementById("sendingMessage").value || "ไม่มีข้อความ",
+        image : (canvas.style.display !== 'none' && hasDrawn) ? canvas.toDataURL("image/png") : null,
+        uploadImage: uploadBase64
+      };
+      
+      if (!payload.sendingMessage && !payload.image && !payload.uploadImage) {
+        alert("กรุณาพิมพ์ข้อความ วาดรูป หรืออัปโหลดรูปก่อนส่งครับ");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "กำลังส่ง...";
+
+      fetch("https://script.google.com/macros/s/AKfycbw1EGsx0VNAIJGsR_uqQzJbsVWGnvrZjL1OS0F9NmsbpWFvmGlmmMfGplJZmnYfYCpI/exec", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          alert("💙 ขอบคุณที่อวยพรเราสองคนค่ะ/ครับ 💙");
+          document.getElementById("wishForm").reset();
+          clearCanvas();
+          canvas.style.display = "none";
+          document.getElementById('show-Canvas').style.display = "block";
+          document.getElementById('clear-Canvas').style.display = "none";
+          document.getElementById('upload-area').style.display = 'none';
+          document.getElementById('showUploadArea').style.display = 'block';
+          btn.disabled = false;
+          btn.innerText = "ส่งคำอวยพร 💙";
+          location.reload();
+        } else {
+          throw new Error(res.error);
+        }
+      })
+      .catch(err => {
+        alert("เกิดข้อผิดพลาด: " + err.message);
+        btn.disabled = false;
+        btn.innerText = "ส่งคำอวยพร 💙";
+      });
+    }
+  </script>
+</body>
+</html>
