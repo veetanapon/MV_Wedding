@@ -151,6 +151,7 @@ function updateSubmitState() {
 
 /* ===== Submit ===== */
 function submitForm() {
+  const btn = document.getElementById('submitBtn');
   if (document.getElementById("submitBtn").disabled) return;
 
   const payload = {
@@ -201,3 +202,4 @@ function submitForm() {
         btn.innerText = "ส่งคำอวยพร 💙";
       });
 }
+
