@@ -141,24 +141,6 @@ canvas {
     red
   );
 }
-input[type="color"] {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  background: conic-gradient(
-    red,
-    yellow,
-    lime,
-    cyan,
-    blue,
-    magenta,
-    red
-  );
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
 
 .pen-size {
   font-size: 13px;

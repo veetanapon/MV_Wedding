@@ -2,10 +2,8 @@
 <html lang="th">
 <head>
   <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-  />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>ส่งคำอวยพร</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -38,20 +36,18 @@
         <!-- TOOLBOX (แบบเดิม) -->
         <div id="canvasTools" class="canvas-tools">
           <div class="tool-row">
-            <!-- <span class="tool-label">สี</span> -->
             <div class="color-presets">
-              <div class="dot active" data-color="#2C3E50" style="background-color: #2C3E50;"></div>
-              <div class="dot" data-color="#E76F51" style="background-color: #E76F51;"></div>
-              <div class="dot" data-color="#2A9D8F" style="background-color: #2A9D8F;"></div>
-              <div class="dot" data-color="#343A40" style="background-color: #343A40;"></div>
-              <!--<input type="color" id="customColor" style="color: #27ae60;"/>-->
+              <div class="dot active" data-color="#2C3E50" style="background:#2C3E50"></div>
+              <div class="dot" data-color="#E76F51" style="background:#E76F51"></div>
+              <div class="dot" data-color="#2A9D8F" style="background:#2A9D8F"></div>
+              <div class="dot" data-color="#343A40" style="background:#343A40"></div>
+
+              <!-- custom color -->
               <div class="dot custom-color" id="customColorBtn" title="เลือกสีเอง"></div>
-              <input type="color" id="customColorInput" style="display:none;">
+              <input type="color" id="customColorInput" hidden />
             </div>
 
-            <button type="button" class="btn-clear" onclick="setEraser()">
-              🧽 ยางลบ
-            </button>
+            <button type="button" class="btn-clear" onclick="setEraser()">🧽</button>
           </div>
 
           <div class="tool-row">
@@ -69,7 +65,7 @@
 
           <button
             type="button"
-            class="btn-clearr full"
+            class="btn-clearr"
             onclick="clearCanvas()"
           >
             ล้างกระดานวาด
@@ -78,10 +74,10 @@
 
         <canvas id="canvas"></canvas>
 
-        <!-- เว้นระยะให้ชัด -->
+        <!-- Support -->
         <button
           type="button"
-          class="btn btn-sub support-btn"
+          class="support-btn"
           onclick="toggleSupport()"
         >
           📸 Special Gift
@@ -95,7 +91,7 @@
 
           <button
             type="button"
-            class="btn btn-sub dashed"
+            class="dashed"
             onclick="document.getElementById('fileInput').click()"
           >
             แตะเพื่อเลือกรูปภาพ
@@ -113,7 +109,7 @@
             <img id="filePreview" />
             <button
               type="button"
-              class="btn-clear remove"
+              class="remove"
               onclick="removeUpload()"
             >
               ลบรูป
@@ -124,6 +120,7 @@
     </div>
   </div>
 
+  <!-- submit fixed bottom -->
   <button
     id="submitBtn"
     class="submit-fixed"

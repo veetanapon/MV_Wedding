@@ -1,9 +1,11 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let drawing=false, hasDrawn=false, uploadBase64=null;
-let currentMode="pen", lastColor="#2C3E50";
-let canSubmit = false;
+let drawing = false;
+let hasDrawn = false;
+let uploadBase64 = null;
+let currentMode = "pen";
+let lastColor = "#2C3E50";
 
 /* ===== Utils ===== */
 function autoExpand(el) {
@@ -14,9 +16,9 @@ function autoExpand(el) {
 function resizeCanvas() {
   const ratio = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
-  canvas.width=rect.width*ratio;
-  canvas.height=rect.height*ratio;
-  ctx.setTransform(ratio,0,0,ratio,0,0);
+  canvas.width = rect.width * ratio;
+  canvas.height = rect.height * ratio;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 }
 
 /* ===== Canvas ===== */
@@ -30,11 +32,9 @@ function showCanvas() {
 function getPos(e) {
   const rect = canvas.getBoundingClientRect();
   const evt = e.touches ? e.touches[0] : e;
-  const scaleX = canvas.width / rect.width;
-  const scaleY = canvas.height / rect.height;
   return {
-    x: (evt.clientX - rect.left) * scaleX,
-    y: (evt.clientY - rect.top) * scaleY
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
   };
 }
 
@@ -51,10 +51,17 @@ function startDrawing(e) {
 function draw(e) {
   if (!drawing) return;
   const pos = getPos(e);
-  ctx.lineWidth = document.getElementById("penSize").value;
+
   ctx.lineCap = "round";
-  ctx.strokeStyle =
-    currentMode === "eraser" ? "#ffffff" : lastColor;
+  ctx.lineWidth = document.getElementById("penSize").value;
+
+  if (currentMode === "eraser") {
+    ctx.globalCompositeOperation = "destination-out";
+  } else {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.strokeStyle = lastColor;
+  }
+
   ctx.lineTo(pos.x, pos.y);
   ctx.stroke();
   e.preventDefault();
@@ -73,22 +80,32 @@ canvas.addEventListener("touchmove", draw, { passive: false });
 canvas.addEventListener("touchend", stopDrawing);
 
 /* ===== Tools ===== */
-document.querySelectorAll(".dot[data-color]").forEach(d=>{
-  d.onclick=()=>{
-    lastColor=d.dataset.color;
-    document.querySelectorAll(".dot").forEach(x=>x.classList.remove("active"));
-    d.classList.add("active");
-  };
+document.querySelectorAll(".dot[data-color]").forEach(dot => {
+  dot.addEventListener("click", () => {
+    currentMode = "pen";
+    lastColor = dot.dataset.color;
+    document.querySelectorAll(".dot").forEach(d => d.classList.remove("active"));
+    dot.classList.add("active");
+  });
 });
-/* CUSTOM COLOR FIX */
-customColorBtn.onclick=()=>customColorInput.click();
-customColorInput.oninput=e=>{
-  lastColor=e.target.value;
-  document.querySelectorAll(".dot").forEach(x=>x.classList.remove("active"));
-  customColorBtn.classList.add("active");
-};
 
-function setEraser(){ lastColor="#fff"; }
+const customBtn = document.getElementById("customColorBtn");
+const customInput = document.getElementById("customColorInput");
+
+customBtn.addEventListener("click", () => {
+  customInput.click();
+});
+
+customInput.addEventListener("input", e => {
+  currentMode = "pen";
+  lastColor = e.target.value;
+  document.querySelectorAll(".dot").forEach(d => d.classList.remove("active"));
+  customBtn.classList.add("active");
+});
+
+function setEraser() {
+  currentMode = "eraser";
+}
 
 function changePenSize(size) {
   document.getElementById("penSizeLabel").innerText = size + " px";
@@ -128,13 +145,13 @@ function removeUpload() {
 /* ===== Validation ===== */
 function updateSubmitState() {
   const msg = document.getElementById("sendingMessage").value.trim();
-  canSubmit = msg.length > 0 || hasDrawn || uploadBase64;
-  document.getElementById("submitBtn").disabled = !canSubmit;
+  document.getElementById("submitBtn").disabled =
+    !(msg || hasDrawn || uploadBase64);
 }
 
 /* ===== Submit ===== */
 function submitForm() {
-  if (!canSubmit) return;
+  if (document.getElementById("submitBtn").disabled) return;
 
   const payload = {
     sendingName: document.getElementById("sendingName").value || "ไม่ประสงค์ออกนาม",
@@ -144,20 +161,5 @@ function submitForm() {
   };
 
   console.log("SEND", payload);
-  // fetch ไป GAS ได้เลย
+  // fetch ไป GAS ตามของคุณได้เลย
 }
-
-const customBtn = document.getElementById("customColorBtn");
-const customInput = document.getElementById("customColorInput");
-
-customBtn.addEventListener("click", () => {
-  customInput.click();
-});
-
-customInput.addEventListener("input", e => {
-  currentMode = "pen";
-  lastColor = e.target.value;
-
-  document.querySelectorAll(".dot").forEach(d => d.classList.remove("active"));
-  customBtn.classList.add("active");
-});
