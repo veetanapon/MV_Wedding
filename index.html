@@ -11,8 +11,8 @@
 <body>
   <div class="container">
     <div class="card">
-      <h1>💌 ส่งคำอวยพรให้มิ้นและวี</h1>
-      <p class="subtitle">ร่วมแสดงความยินดีแก่บ่าวสาว</p>
+      <h1>💌 ส่งคำอวยพร</h1>
+      <p class="subtitle">ร่วมแสดงความยินดีแก่มิ้นและวี</p>
 
       <form id="wishForm" onsubmit="return false;">
         <input type="text" id="sendingName" placeholder="ชื่อของคุณ" />
@@ -66,57 +66,24 @@
             <span class="pen-size" id="penSizeLabel">5 px</span>
           </div>
 
-          <button
-            type="button"
-            class="btn-clearr"
-            onclick="clearCanvas()"
-          >
-            ล้างกระดานวาด
-          </button>
+          <button type="button" class="btn-clearr" onclick="clearCanvas()">ล้างกระดานวาด</button>
         </div>
 
         <canvas id="canvas"></canvas>
 
         <!-- Support -->
-        <button
-          type="button"
-          class="support-btn"
-          onclick="toggleSupport()"
-        >
-          📸 Special Gift
-        </button>
+        <button type="button" class="support-btn" onclick="toggleSupport()">🎁 Special Gift</button>
 
         <div id="uploadArea" class="upload-area">
           <img
             src="https://lh3.googleusercontent.com/u/0/d/19XRp5l9hpjHbnaW7oc0zvUw44ODZqgI_"
             class="qr-img"
           />
-
-          <button
-            type="button"
-            class="dashed"
-            onclick="document.getElementById('fileInput').click()"
-          >
-            แตะเพื่อเลือกรูปภาพ
-          </button>
-
-          <input
-            type="file"
-            id="fileInput"
-            accept="image/*"
-            hidden
-            onchange="previewImage(this)"
-          />
-
+          <button type="button" class="dashed" onclick="document.getElementById('fileInput').click()">📸 แตะเพื่อเลือกรูปภาพ</button>
+          <input type="file" id="fileInput" accept="image/*" hidden onchange="previewImage(this)"/>
           <div id="previewContainer">
             <img id="filePreview" />
-            <button
-              type="button"
-              class="remove"
-              onclick="removeUpload()"
-            >
-              ลบรูป
-            </button>
+            <button type="button" class="remove" onclick="removeUpload()">ลบรูป</button>
           </div>
         </div>
       </form>
@@ -124,14 +91,7 @@
   </div>
 
   <!-- submit fixed bottom -->
-  <button
-    id="submitBtn"
-    class="submit-fixed"
-    onclick="submitForm()"
-    disabled
-  >
-    ส่งคำอวยพร 💙
-  </button>
+  <button id="submitBtn" class="submit-fixed" onclick="submitForm()" disabled>ส่งคำอวยพร 💙</button>
 
   <script src="script.js"></script>
 </body>
