@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #f8f6f2;
+  background: #f2f6f9; /* ฟ้าอ่อนนุ่ม */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,7 @@ body {
   background: #ffffff;
   padding: 32px 24px;
   border-radius: 18px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+  box-shadow: 0 15px 40px rgba(108, 142, 160, 0.12);
   text-align: center;
 }
 
@@ -31,11 +31,12 @@ body {
   font-size: 26px;
   font-weight: 500;
   margin-bottom: 8px;
+  color: #6c8ea0;
 }
 
 .subtitle {
   font-size: 14px;
-  color: #888;
+  color: #6f8794;
   margin-bottom: 28px;
 }
 
@@ -47,14 +48,15 @@ input[type="text"] {
   width: 100%;
   padding: 14px;
   border-radius: 14px;
-  border: 1px solid #ddd;
+  border: 1px solid #d6e2ea;
   font-size: 16px;
   transition: 0.3s;
 }
 
 input[type="text"]:focus {
   outline: none;
-  border-color: #c7a17a;
+  border-color: #6c8ea0;
+  box-shadow: 0 0 0 3px rgba(108, 142, 160, 0.15);
 }
 
 .button-group {
@@ -73,25 +75,33 @@ input[type="text"]:focus {
   transition: 0.3s;
 }
 
+/* ปุ่มหลัก */
 .primary {
-  background: #c7a17a;
+  background: #6c8ea0;
   color: #fff;
 }
 
 .primary:hover {
-  background: #b08968;
+  background: #5c7d90;
 }
 
+/* ปุ่มรอง */
 .secondary {
-  background: #f1eee9;
-  color: #6d5c4d;
+  background: #e8f1f6;
+  color: #5c7d90;
 }
 
 .secondary:hover {
-  background: #e6e1da;
+  background: #d9e7ef;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .status-message {
   margin-top: 18px;
   font-size: 14px;
+  min-height: 20px;
 }
