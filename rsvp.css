@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Prompt', sans-serif;
+}
+
+body {
+  background: #f8f6f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  padding: 20px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 32px 24px;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 28px;
+}
+
+.input-group {
+  margin-bottom: 25px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #c7a17a;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.btn {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.primary {
+  background: #c7a17a;
+  color: #fff;
+}
+
+.primary:hover {
+  background: #b08968;
+}
+
+.secondary {
+  background: #f1eee9;
+  color: #6d5c4d;
+}
+
+.secondary:hover {
+  background: #e6e1da;
+}
+
+.status-message {
+  margin-top: 18px;
+  font-size: 14px;
+}
