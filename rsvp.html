@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mint&Vee Wedding RSVP</title>
+  <link rel="stylesheet" href="rsvp.css" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+
+      <h1 class="title">Sasitorn & Tanapon Wedding RSVP</h1>
+      <p class="subtitle">ตอบรับเข้าร่วมงาน</p>
+
+      <form id="rsvpForm">
+
+        <div class="input-group">
+          <input 
+            type="text" 
+            id="name" 
+            placeholder="กรุณาระบุชื่อ"
+            required
+          />
+        </div>
+
+        <div class="button-group">
+          <button class="btn primary" onclick="submitRSVP(1)">
+            ยืนยันไปร่วมแสดงความยินดี
+          </button>
+
+          <button class="btn secondary" onclick="submitRSVP(0)">
+            ไม่สะดวกเข้าร่วม แต่ขอแสดงความยินดี
+          </button>
+        </div>
+
+        <p class="status-message" id="statusMessage"></p>
+
+      </form>
+    </div>
+  </div>
+
+  <script src="rsvp.js"></script>
+</body>
+</html>
