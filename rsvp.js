@@ -15,17 +15,15 @@ async function submitRSVP(isComing) {
   statusMessage.innerText = "กำลังบันทึกข้อมูล...";
 
   try {
-    const payload = {
-      action: "rsvp",
-      sendingName: name,
-      isComingSelection: isComing
-    };
+
+    const formData = new URLSearchParams();
+    formData.append("action", "rsvp");
+    formData.append("sendingName", name);
+    formData.append("isComingSelection", isComing);
+
     const response = await fetch(GAS_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
+      body: formData
     });
 
     const result = await response.text();
