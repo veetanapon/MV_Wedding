@@ -1,97 +1,133 @@
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Prompt', sans-serif;
 }
 
 body {
-  background: #f8f6f2;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Sarabun", sans-serif;
+  background: #ffffff;
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+}
+
+/* ===== Desktop background ===== */
+@media (min-width: 600px) {
+  body {
+    background: #f5f7f8;
+    padding: 20px 0;
+  }
 }
 
 .container {
   width: 100%;
-  max-width: 480px;
-  padding: 20px;
+  max-width: 420px;
 }
 
 .card {
   background: #ffffff;
-  padding: 32px 24px;
-  border-radius: 18px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-  text-align: center;
+  padding: 32px 18px 40px;
 }
 
-.title {
-  font-size: 26px;
-  font-weight: 500;
-  margin-bottom: 8px;
+/* card ลอยเฉพาะ desktop */
+@media (min-width: 600px) {
+  .card {
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+}
+
+h1 {
+  text-align: center;
+  color: #6c8ea0;
+  margin-bottom: 6px;
 }
 
 .subtitle {
-  font-size: 14px;
-  color: #888;
+  text-align: center;
+  color: #555;
   margin-bottom: 28px;
+  font-size: 14px;
 }
 
-.input-group {
-  margin-bottom: 25px;
-}
-
-input[type="text"] {
+/* ===== Input ===== */
+input {
   width: 100%;
   padding: 14px;
   border-radius: 14px;
   border: 1px solid #ddd;
-  font-size: 16px;
-  transition: 0.3s;
+  font-size: 15px;
+  margin-bottom: 20px;
+  transition: 0.2s ease;
 }
 
-input[type="text"]:focus {
+input:focus {
   outline: none;
-  border-color: #c7a17a;
+  border-color: #6c8ea0;
+  box-shadow: 0 0 0 3px rgba(108,142,160,0.15);
 }
 
+/* ===== Button Group ===== */
 .button-group {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
+/* ปุ่มหลัก */
 .btn {
   width: 100%;
-  padding: 15px;
-  border-radius: 14px;
-  font-size: 15px;
+  padding: 16px;
+  border-radius: 18px;
   border: none;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s ease;
 }
 
-.primary {
-  background: #c7a17a;
-  color: #fff;
+/* ยืนยันไปร่วมงาน */
+.btn-primary {
+  background: #6c8ea0;
+  color: white;
 }
 
-.primary:hover {
-  background: #b08968;
+.btn-primary:hover {
+  background: #5a7c8d;
 }
 
-.secondary {
-  background: #f1eee9;
-  color: #6d5c4d;
+/* ไม่สะดวกเข้าร่วม */
+.btn-secondary {
+  background: #f0f4f7;
+  color: #6c8ea0;
+  border: 1px dashed #6c8ea0;
 }
 
-.secondary:hover {
-  background: #e6e1da;
+.btn-secondary:hover {
+  background: #e4edf2;
 }
 
+/* disabled state */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== Status Message ===== */
 .status-message {
-  margin-top: 18px;
+  text-align: center;
   font-size: 14px;
+  margin-top: 20px;
+  min-height: 20px;
+}
+
+/* Success / Error helper (ถ้าอยากใช้ class แทน inline style) */
+.status-success {
+  color: #2e7d32;
+}
+
+.status-error {
+  color: #c62828;
+}
+
+.status-loading {
+  color: #888;
 }
